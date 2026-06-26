@@ -1,0 +1,296 @@
+package com.example.hotelbooking
+‎
+‎import android.content.Context
+‎import android.content.Intent
+‎import android.net.Uri
+‎import android.os.Bundle
+‎import android.widget.Toast
+‎import androidx.activity.ComponentActivity
+‎import androidx.activity.compose.setContent
+‎import androidx.compose.foundation.background
+‎import androidx.compose.foundation.layout.*
+‎import androidx.compose.foundation.rememberScrollState
+‎import androidx.compose.foundation.shape.RoundedCornerShape
+‎import androidx.compose.foundation.text.KeyboardOptions
+‎import androidx.compose.foundation.verticalScroll
+‎import androidx.compose.material.icons.Icons
+‎import androidx.compose.material.icons.filled.*
+‎import androidx.compose.material3.*
+‎import androidx.compose.runtime.*
+‎import androidx.compose.ui.Alignment
+‎import androidx.compose.ui.Modifier
+‎import androidx.compose.ui.graphics.Color
+‎import androidx.compose.ui.platform.LocalClipboardManager
+‎import androidx.compose.ui.platform.LocalContext
+‎import androidx.compose.ui.text.AnnotatedString
+‎import androidx.compose.ui.text.font.FontWeight
+‎import androidx.compose.ui.text.input.KeyboardType
+‎import androidx.compose.ui.unit.dp
+‎import androidx.compose.ui.unit.sp
+‎import java.text.SimpleDateFormat
+‎import java.util.*
+‎
+‎class MainActivity : ComponentActivity() {
+‎    override fun onCreate(savedInstanceState: Bundle?) {
+‎        super.onCreate(savedInstanceState)
+‎        setContent {
+‎            HotelBookingTheme {
+‎                Surface(
+‎                    modifier = Modifier.fillMaxSize(),
+‎                    color = MaterialTheme.colorScheme.background
+‎                ) {
+‎                    HotelBookingScreen()
+‎                }
+‎            }
+‎        }
+‎    }
+‎}
+‎
+‎@OptIn(ExperimentalMaterial3Api::class)
+‎@Composable
+‎fun HotelBookingScreen() {
+‎    val context = LocalContext.current
+‎    val clipboardManager = LocalClipboardManager.current
+‎    val scrollState = rememberScrollState()
+‎
+‎    // Form States
+‎    var firstName by remember { mutableStateOf("") }
+‎    var lastName by remember { mutableStateOf("") }
+‎    var email by remember { mutableStateOf("") }
+‎    var whatsapp by remember { mutableStateOf("") }
+‎    var selectedHotel by remember { mutableStateOf("") }
+‎    var checkInDate by remember { mutableStateOf("") }
+‎    var checkOutDate by remember { mutableStateOf("") }
+‎    var roomCount by remember { mutableStateOf("") }
+‎    var guestCount by remember { mutableStateOf("") }
+‎
+‎    val promoCode = "HEMATCeria2024"
+‎    val hotelOptions = listOf("Grand Hyatt", "Ritz Carlton", "Marriott", "Hilton", "InterContinental")
+‎    var expandedHotel by remember { mutableStateOf(false) }
+‎
+‎    Scaffold(
+‎        topBar = {
+‎            CenterAlignedTopAppBar(
+‎                title = {
+‎                    Text(
+‎                        "STAYCATION INDO",
+‎                        color = Color.White,
+‎                        fontWeight = FontWeight.Bold,
+‎                        letterSpacing = 2.sp
+‎                    )
+‎                },
+‎                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+‎                    containerColor = Color(0xFFD32F2F) // Modern Red
+‎                )
+‎            )
+‎        }
+‎    ) { padding ->
+‎        Column(
+‎            modifier = Modifier
+‎                .padding(padding)
+‎                .fillMaxSize()
+‎                .verticalScroll(scrollState)
+‎                .padding(16.dp),
+‎            verticalArrangement = Arrangement.spacedBy(16.dp)
+‎        ) {
+‎            // Promo Card Section
+‎            Card(
+‎                modifier = Modifier.fillMaxWidth(),
+‎                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFEBEE)),
+‎                shape = RoundedCornerShape(12.dp)
+‎            ) {
+‎                Row(
+‎                    modifier = Modifier
+‎                        .padding(16.dp)
+‎                        .fillMaxWidth(),
+‎                    horizontalArrangement = Arrangement.SpaceBetween,
+‎                    verticalAlignment = Alignment.CenterVertically
+‎                ) {
+‎                    Column {
+‎                        Text("Promo Khusus Hari Ini", style = MaterialTheme.typography.labelMedium, color = Color.Gray)
+‎                        Text(promoCode, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = Color(0xFFD32F2F))
+‎                    }
+‎                    Button(
+‎                        onClick = {
+‎                            clipboardManager.setText(AnnotatedString(promoCode))
+‎                            Toast.makeText(context, "Promo disalin!", Toast.LENGTH_SHORT).show()
+‎                        },
+‎                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F))
+‎                    ) {
+‎                        Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
+‎                        Spacer(Modifier.width(8.dp))
+‎                        Text("Salin")
+‎                    }
+‎                }
+‎            }
+‎
+‎            Text("Formulir Pemesanan", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+‎
+‎            // Nama Section
+‎            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+‎                OutlinedTextField(
+‎                    value = firstName,
+‎                    onValueChange = { firstName = it },
+‎                    label = { Text("Nama Depan") },
+‎                    modifier = Modifier.weight(1f)
+‎                )
+‎                OutlinedTextField(
+‎                    value = lastName,
+‎                    onValueChange = { lastName = it },
+‎                    label = { Text("Nama Belakang") },
+‎                    modifier = Modifier.weight(1f)
+‎                )
+‎            }
+‎
+‎            // Email & WA
+‎            OutlinedTextField(
+‎                value = email,
+‎                onValueChange = { email = it },
+‎                label = { Text("Email") },
+‎                modifier = Modifier.fillMaxWidth(),
+‎                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+‎            )
+‎
+‎            OutlinedTextField(
+‎                value = whatsapp,
+‎                onValueChange = { whatsapp = it },
+‎                label = { Text("Nomor WhatsApp") },
+‎                modifier = Modifier.fillMaxWidth(),
+‎                placeholder = { Text("0812xxx") },
+‎                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+‎            )
+‎
+‎            // Hotel Selection
+‎            ExposedDropdownMenuBox(
+‎                expanded = expandedHotel,
+‎                onExpandedChange = { expandedHotel = !expandedHotel }
+‎            ) {
+‎                OutlinedTextField(
+‎                    value = selectedHotel,
+‎                    onValueChange = {},
+‎                    readOnly = true,
+‎                    label = { Text("Pilih Hotel") },
+‎                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedHotel) },
+‎                    modifier = Modifier.menuAnchor().fillMaxWidth()
+‎                )
+‎                ExposedDropdownMenu(
+‎                    expanded = expandedHotel,
+‎                    onDismissRequest = { expandedHotel = false }
+‎                ) {
+‎                    hotelOptions.forEach { hotel ->
+‎                        DropdownMenuItem(
+‎                            text = { Text(hotel) },
+‎                            onClick = {
+‎                                selectedHotel = hotel
+‎                                expandedHotel = false
+‎                            }
+‎                        )
+‎                    }
+‎                }
+‎            }
+‎
+‎            // Check-In & Check-Out
+‎            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+‎                OutlinedTextField(
+‎                    value = checkInDate,
+‎                    onValueChange = { checkInDate = it },
+‎                    label = { Text("Check-In") },
+‎                    placeholder = { Text("DD/MM/YYYY") },
+‎                    modifier = Modifier.weight(1f)
+‎                )
+‎                OutlinedTextField(
+‎                    value = checkOutDate,
+‎                    onValueChange = { checkOutDate = it },
+‎                    label = { Text("Check-Out") },
+‎                    placeholder = { Text("DD/MM/YYYY") },
+‎                    modifier = Modifier.weight(1f)
+‎                )
+‎            }
+‎
+‎            // Rooms & Guests
+‎            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+‎                OutlinedTextField(
+‎                    value = roomCount,
+‎                    onValueChange = { roomCount = it },
+‎                    label = { Text("Kamar") },
+‎                    modifier = Modifier.weight(1f),
+‎                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+‎                )
+‎                OutlinedTextField(
+‎                    value = guestCount,
+‎                    onValueChange = { guestCount = it },
+‎                    label = { Text("Tamu") },
+‎                    modifier = Modifier.weight(1f),
+‎                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+‎                )
+‎            }
+‎
+‎            Spacer(modifier = Modifier.height(16.dp))
+‎
+‎            // WhatsApp Checkout Button
+‎            Button(
+‎                onClick = {
+‎                    if (firstName.isEmpty() || whatsapp.isEmpty() || selectedHotel.isEmpty()) {
+‎                        Toast.makeText(context, "Mohon lengkapi data utama", Toast.LENGTH_SHORT).show()
+‎                    } else {
+‎                        sendWhatsAppMessage(
+‎                            context, firstName, lastName, email, whatsapp, 
+‎                            selectedHotel, checkInDate, checkOutDate, roomCount, guestCount
+‎                        )
+‎                    }
+‎                },
+‎                modifier = Modifier
+‎                    .fillMaxWidth()
+‎                    .height(56.dp),
+‎                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF25D366)), // WA Green
+‎                shape = RoundedCornerShape(8.dp)
+‎            ) {
+‎                Icon(Icons.Default.ShoppingCart, contentDescription = null)
+‎                Spacer(Modifier.width(8.dp))
+‎                Text("Checkout via WhatsApp", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+‎            }
+‎        }
+‎    }
+‎}
+‎
+‎fun sendWhatsAppMessage(
+‎    context: Context,
+‎    fName: String, lName: String, email: String, wa: String,
+‎    hotel: String, checkIn: String, checkOut: String, rooms: String, guests: String
+‎) {
+‎    val message = """
+‎        Halo Admin, Saya ingin booking hotel:
+‎        
+‎        *Data Pemesan:*
+‎        Nama: $fName $lName
+‎        Email: $email
+‎        WhatsApp: $wa
+‎        
+‎        *Detail Pesanan:*
+‎        Hotel: $hotel
+‎        Check-In: $checkIn
+‎        Check-Out: $checkOut
+‎        Jumlah Kamar: $rooms
+‎        Jumlah Tamu: $guests
+‎        
+‎        Mohon segera dikonfirmasi. Terima kasih.
+‎    """.trimIndent()
+‎
+‎    val url = "https://api.whatsapp.com/send?phone=6287830226641&text=${Uri.encode(message)}"
+‎    val intent = Intent(Intent.ACTION_VIEW)
+‎    intent.data = Uri.parse(url)
+‎    context.startActivity(intent)
+‎}
+‎
+‎@Composable
+‎fun HotelBookingTheme(content: @Composable () -> Unit) {
+‎    MaterialTheme(
+‎        colorScheme = lightColorScheme(
+‎            primary = Color(0xFFD32F2F),
+‎            secondary = Color(0xFFB71C1C),
+‎            tertiary = Color(0xFF25D366)
+‎        ),
+‎        content = content
+‎    )
+‎}
+‎
