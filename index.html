@@ -1,296 +1,118 @@
-package com.example.hotelbooking
+‎<!DOCTYPE html>
+‎<html lang="id">
+‎<head>
+‎    <meta charset="UTF-8">
+‎    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎    <title>Booking RedDoorZ - Agen Resmi</title>
+‎    <!-- Menggunakan Tailwind CSS untuk tampilan premium dan responsif -->
+‎    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+‎    <style>
+‎        .brand-red { background-color: #FF2E44; }
+‎        .text-brand-red { color: #FF2E44; }
+‎    </style>
+‎</head>
+‎<body class="bg-gray-50 text-gray-800 font-sans">
 ‎
-‎import android.content.Context
-‎import android.content.Intent
-‎import android.net.Uri
-‎import android.os.Bundle
-‎import android.widget.Toast
-‎import androidx.activity.ComponentActivity
-‎import androidx.activity.compose.setContent
-‎import androidx.compose.foundation.background
-‎import androidx.compose.foundation.layout.*
-‎import androidx.compose.foundation.rememberScrollState
-‎import androidx.compose.foundation.shape.RoundedCornerShape
-‎import androidx.compose.foundation.text.KeyboardOptions
-‎import androidx.compose.foundation.verticalScroll
-‎import androidx.compose.material.icons.Icons
-‎import androidx.compose.material.icons.filled.*
-‎import androidx.compose.material3.*
-‎import androidx.compose.runtime.*
-‎import androidx.compose.ui.Alignment
-‎import androidx.compose.ui.Modifier
-‎import androidx.compose.ui.graphics.Color
-‎import androidx.compose.ui.platform.LocalClipboardManager
-‎import androidx.compose.ui.platform.LocalContext
-‎import androidx.compose.ui.text.AnnotatedString
-‎import androidx.compose.ui.text.font.FontWeight
-‎import androidx.compose.ui.text.input.KeyboardType
-‎import androidx.compose.ui.unit.dp
-‎import androidx.compose.ui.unit.sp
-‎import java.text.SimpleDateFormat
-‎import java.util.*
+‎    <!-- Header / Navbar -->
+‎    <header class="brand-red text-white p-4 shadow-md sticky top-0 z-50">
+‎        <div class="max-w-md mx-auto flex items-center justify-between">
+‎            <h1 class="text-xl font-bold tracking-wide">RedDoorZ <span class="text-xs font-normal bg-white text-brand-red px-2 py-0.5 rounded-full">Mitra RedSeller</span></h1>
+‎        </div>
+‎    </header>
 ‎
-‎class MainActivity : ComponentActivity() {
-‎    override fun onCreate(savedInstanceState: Bundle?) {
-‎        super.onCreate(savedInstanceState)
-‎        setContent {
-‎            HotelBookingTheme {
-‎                Surface(
-‎                    modifier = Modifier.fillMaxSize(),
-‎                    color = MaterialTheme.colorScheme.background
-‎                ) {
-‎                    HotelBookingScreen()
-‎                }
-‎            }
-‎        }
-‎    }
-‎}
-‎
-‎@OptIn(ExperimentalMaterial3Api::class)
-‎@Composable
-‎fun HotelBookingScreen() {
-‎    val context = LocalContext.current
-‎    val clipboardManager = LocalClipboardManager.current
-‎    val scrollState = rememberScrollState()
-‎
-‎    // Form States
-‎    var firstName by remember { mutableStateOf("") }
-‎    var lastName by remember { mutableStateOf("") }
-‎    var email by remember { mutableStateOf("") }
-‎    var whatsapp by remember { mutableStateOf("") }
-‎    var selectedHotel by remember { mutableStateOf("") }
-‎    var checkInDate by remember { mutableStateOf("") }
-‎    var checkOutDate by remember { mutableStateOf("") }
-‎    var roomCount by remember { mutableStateOf("") }
-‎    var guestCount by remember { mutableStateOf("") }
-‎
-‎    val promoCode = "HEMATCeria2024"
-‎    val hotelOptions = listOf("Grand Hyatt", "Ritz Carlton", "Marriott", "Hilton", "InterContinental")
-‎    var expandedHotel by remember { mutableStateOf(false) }
-‎
-‎    Scaffold(
-‎        topBar = {
-‎            CenterAlignedTopAppBar(
-‎                title = {
-‎                    Text(
-‎                        "STAYCATION INDO",
-‎                        color = Color.White,
-‎                        fontWeight = FontWeight.Bold,
-‎                        letterSpacing = 2.sp
-‎                    )
-‎                },
-‎                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-‎                    containerColor = Color(0xFFD32F2F) // Modern Red
-‎                )
-‎            )
-‎        }
-‎    ) { padding ->
-‎        Column(
-‎            modifier = Modifier
-‎                .padding(padding)
-‎                .fillMaxSize()
-‎                .verticalScroll(scrollState)
-‎                .padding(16.dp),
-‎            verticalArrangement = Arrangement.spacedBy(16.dp)
-‎        ) {
-‎            // Promo Card Section
-‎            Card(
-‎                modifier = Modifier.fillMaxWidth(),
-‎                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFEBEE)),
-‎                shape = RoundedCornerShape(12.dp)
-‎            ) {
-‎                Row(
-‎                    modifier = Modifier
-‎                        .padding(16.dp)
-‎                        .fillMaxWidth(),
-‎                    horizontalArrangement = Arrangement.SpaceBetween,
-‎                    verticalAlignment = Alignment.CenterVertically
-‎                ) {
-‎                    Column {
-‎                        Text("Promo Khusus Hari Ini", style = MaterialTheme.typography.labelMedium, color = Color.Gray)
-‎                        Text(promoCode, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = Color(0xFFD32F2F))
-‎                    }
-‎                    Button(
-‎                        onClick = {
-‎                            clipboardManager.setText(AnnotatedString(promoCode))
-‎                            Toast.makeText(context, "Promo disalin!", Toast.LENGTH_SHORT).show()
-‎                        },
-‎                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F))
-‎                    ) {
-‎                        Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
-‎                        Spacer(Modifier.width(8.dp))
-‎                        Text("Salin")
-‎                    }
-‎                }
-‎            }
-‎
-‎            Text("Formulir Pemesanan", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-‎
-‎            // Nama Section
-‎            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-‎                OutlinedTextField(
-‎                    value = firstName,
-‎                    onValueChange = { firstName = it },
-‎                    label = { Text("Nama Depan") },
-‎                    modifier = Modifier.weight(1f)
-‎                )
-‎                OutlinedTextField(
-‎                    value = lastName,
-‎                    onValueChange = { lastName = it },
-‎                    label = { Text("Nama Belakang") },
-‎                    modifier = Modifier.weight(1f)
-‎                )
-‎            }
-‎
-‎            // Email & WA
-‎            OutlinedTextField(
-‎                value = email,
-‎                onValueChange = { email = it },
-‎                label = { Text("Email") },
-‎                modifier = Modifier.fillMaxWidth(),
-‎                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-‎            )
-‎
-‎            OutlinedTextField(
-‎                value = whatsapp,
-‎                onValueChange = { whatsapp = it },
-‎                label = { Text("Nomor WhatsApp") },
-‎                modifier = Modifier.fillMaxWidth(),
-‎                placeholder = { Text("0812xxx") },
-‎                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-‎            )
-‎
-‎            // Hotel Selection
-‎            ExposedDropdownMenuBox(
-‎                expanded = expandedHotel,
-‎                onExpandedChange = { expandedHotel = !expandedHotel }
-‎            ) {
-‎                OutlinedTextField(
-‎                    value = selectedHotel,
-‎                    onValueChange = {},
-‎                    readOnly = true,
-‎                    label = { Text("Pilih Hotel") },
-‎                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedHotel) },
-‎                    modifier = Modifier.menuAnchor().fillMaxWidth()
-‎                )
-‎                ExposedDropdownMenu(
-‎                    expanded = expandedHotel,
-‎                    onDismissRequest = { expandedHotel = false }
-‎                ) {
-‎                    hotelOptions.forEach { hotel ->
-‎                        DropdownMenuItem(
-‎                            text = { Text(hotel) },
-‎                            onClick = {
-‎                                selectedHotel = hotel
-‎                                expandedHotel = false
-‎                            }
-‎                        )
-‎                    }
-‎                }
-‎            }
-‎
-‎            // Check-In & Check-Out
-‎            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-‎                OutlinedTextField(
-‎                    value = checkInDate,
-‎                    onValueChange = { checkInDate = it },
-‎                    label = { Text("Check-In") },
-‎                    placeholder = { Text("DD/MM/YYYY") },
-‎                    modifier = Modifier.weight(1f)
-‎                )
-‎                OutlinedTextField(
-‎                    value = checkOutDate,
-‎                    onValueChange = { checkOutDate = it },
-‎                    label = { Text("Check-Out") },
-‎                    placeholder = { Text("DD/MM/YYYY") },
-‎                    modifier = Modifier.weight(1f)
-‎                )
-‎            }
-‎
-‎            // Rooms & Guests
-‎            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-‎                OutlinedTextField(
-‎                    value = roomCount,
-‎                    onValueChange = { roomCount = it },
-‎                    label = { Text("Kamar") },
-‎                    modifier = Modifier.weight(1f),
-‎                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-‎                )
-‎                OutlinedTextField(
-‎                    value = guestCount,
-‎                    onValueChange = { guestCount = it },
-‎                    label = { Text("Tamu") },
-‎                    modifier = Modifier.weight(1f),
-‎                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-‎                )
-‎            }
-‎
-‎            Spacer(modifier = Modifier.height(16.dp))
-‎
-‎            // WhatsApp Checkout Button
-‎            Button(
-‎                onClick = {
-‎                    if (firstName.isEmpty() || whatsapp.isEmpty() || selectedHotel.isEmpty()) {
-‎                        Toast.makeText(context, "Mohon lengkapi data utama", Toast.LENGTH_SHORT).show()
-‎                    } else {
-‎                        sendWhatsAppMessage(
-‎                            context, firstName, lastName, email, whatsapp, 
-‎                            selectedHotel, checkInDate, checkOutDate, roomCount, guestCount
-‎                        )
-‎                    }
-‎                },
-‎                modifier = Modifier
-‎                    .fillMaxWidth()
-‎                    .height(56.dp),
-‎                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF25D366)), // WA Green
-‎                shape = RoundedCornerShape(8.dp)
-‎            ) {
-‎                Icon(Icons.Default.ShoppingCart, contentDescription = null)
-‎                Spacer(Modifier.width(8.dp))
-‎                Text("Checkout via WhatsApp", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-‎            }
-‎        }
-‎    }
-‎}
-‎
-‎fun sendWhatsAppMessage(
-‎    context: Context,
-‎    fName: String, lName: String, email: String, wa: String,
-‎    hotel: String, checkIn: String, checkOut: String, rooms: String, guests: String
-‎) {
-‎    val message = """
-‎        Halo Admin, Saya ingin booking hotel:
+‎    <!-- Konten Utama -->
+‎    <main class="max-w-md mx-auto p-4 mb-8">
 ‎        
-‎        *Data Pemesan:*
-‎        Nama: $fName $lName
-‎        Email: $email
-‎        WhatsApp: $wa
-‎        
-‎        *Detail Pesanan:*
-‎        Hotel: $hotel
-‎        Check-In: $checkIn
-‎        Check-Out: $checkOut
-‎        Jumlah Kamar: $rooms
-‎        Jumlah Tamu: $guests
-‎        
-‎        Mohon segera dikonfirmasi. Terima kasih.
-‎    """.trimIndent()
+‎        <!-- Banner Promo -->
+‎        <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex items-center justify-between shadow-sm">
+‎            <div>
+‎                <p class="text-xs text-red-600 font-semibold uppercase tracking-wider">Promo Hemat Otomatis</p>
+‎                <p class="text-lg font-bold text-gray-900">RDAFFREDOORZPROMOHEMAT</p>
+‎            </div>
+‎            <span class="bg-green-500 text-white text-xs font-bold px-2.5 py-1 rounded">Aktif</span>
+‎        </div>
 ‎
-‎    val url = "https://api.whatsapp.com/send?phone=6287830226641&text=${Uri.encode(message)}"
-‎    val intent = Intent(Intent.ACTION_VIEW)
-‎    intent.data = Uri.parse(url)
-‎    context.startActivity(intent)
-‎}
+‎        <!-- Formulir Booking -->
+‎        <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+‎            <h2 class="text-lg font-bold mb-4 text-gray-900 border-b pb-2 border-gray-100">Data Pemesan</h2>
+‎            
+‎            <form id="bookingForm" onsubmit="sendToWhatsApp(event)">
+‎                
+‎                <!-- Nama Depan & Belakang -->
+‎                <div class="grid grid-cols-2 gap-4 mb-4">
+‎                    <div>
+‎                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Depan</label>
+‎                        <input type="text" id="firstName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
+‎                    </div>
+‎                    <div>
+‎                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Belakang</label>
+‎                        <input type="text" id="lastName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
+‎                    </div>
+‎                </div>
 ‎
-‎@Composable
-‎fun HotelBookingTheme(content: @Composable () -> Unit) {
-‎    MaterialTheme(
-‎        colorScheme = lightColorScheme(
-‎            primary = Color(0xFFD32F2F),
-‎            secondary = Color(0xFFB71C1C),
-‎            tertiary = Color(0xFF25D366)
-‎        ),
-‎        content = content
-‎    )
-‎}
+‎                <!-- Email -->
+‎                <div class="mb-4">
+‎                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Alamat Email</label>
+‎                    <input type="email" id="email" required placeholder="nama@email.com" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
+‎                </div>
+‎
+‎                <!-- Nomor Telepon -->
+‎                <div class="mb-4">
+‎                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nomor Telepon / WA</label>
+‎                    <input type="tel" id="phone" required placeholder="Contoh: 081234567xxx" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
+‎                </div>
+‎
+‎                <!-- Catatan Pilihan Hotel -->
+‎                <div class="mb-6">
+‎                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Hotel & Tanggal Check-in</label>
+‎                    <textarea id="hotelDetails" required rows="3" placeholder="Contoh: RedDoorZ near Malioboro, Check-in 25 Juni 2026 (2 Malam)" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"></textarea>
+‎                </div>
+‎
+‎                <!-- Tombol Checkout -->
+‎                <button type="submit" class="w-full brand-red hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform active:scale-95 transition duration-150 flex items-center justify-center gap-2 cursor-pointer">
+‎                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.4.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.528 1.975 14.067 1.04 11.45 1.041 6.012 1.041 1.587 5.411 1.584 10.84c-.001 1.638.433 3.237 1.258 4.655l-.971 3.548 3.637-.943z"/></svg>
+‎                    Checkout ke WhatsApp Agen
+‎                </button>
+‎            </form>
+‎        </div>
+‎    </main>
+‎
+‎    <!-- Kode Logika Sistem -->
+‎    <script>
+‎        function sendToWhatsApp(event) {
+‎            event.preventDefault();
+‎
+‎            // 1. GANTI NOMOR INI dengan nomor WhatsApp Anda (Gunakan kode negara, contoh 628783022641 tanpa spasi/tanda +)
+‎            const nomorAgen ="6287830226641"; 
+‎            const kodePromo = "RDAFFREDOORZPROMOHEMAT";
+‎
+‎            // 2. Ambil data dari formulir
+‎            const firstName = document.getElementById('firstName').value;
+‎            const lastName = document.getElementById('lastName').value;
+‎            const email = document.getElementById('email').value;
+‎            const phone = document.getElementById('phone').value;
+‎            const hotelDetails = document.getElementById('hotelDetails').value;
+‎
+‎            // 3. Susun template pesan teks
+‎            const pesan teks = `*PESANAN KAMAR REDDOORZ (via Web App)*\n` +
+‎                          `----------------------------------------\n\n` +
+‎                          `*Data Tamu:*\n` +
+‎                          `• Nama Lengkap: ${firstName} ${lastName}\n` +
+‎                          `• Email: ${email}\n` +
+‎                          `• No. HP Tamu: ${phone}\n\n` +
+‎                          `*Detail Booking:*\n` +
+‎                          `${hotelDetails}\n\n` +
+‎                          `----------------------------------------\n` +
+‎                          `*KODE PROMO KUNCI:* \`${kodePromo}\`\n\n` +
+‎                          `Mohon diproses pemesanannya ya Agen!`;
+‎
+‎            // 4. Encode pesan ke format URL WhatsApp
+‎            const urlWhatsApp = `https://api.whatsapp.com/send?phone=${nomorAgen}&text=${encodeURIComponent(pesan teks)}`;
+‎
+‎            // 5. Alihkan pengguna langsung ke WhatsApp
+‎            window.open(urlWhatsApp, '_blank');
+‎        }
+‎    </script>
+‎</body>
+‎</html>
 ‎
