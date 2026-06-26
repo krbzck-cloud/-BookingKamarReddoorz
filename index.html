@@ -1,118 +1,217 @@
-‎<!DOCTYPE html>
-‎<html lang="id">
-‎<head>
-‎    <meta charset="UTF-8">
-‎    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-‎    <title>Booking RedDoorZ - Agen Resmi</title>
-‎    <!-- Menggunakan Tailwind CSS untuk tampilan premium dan responsif -->
-‎    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-‎    <style>
-‎        .brand-red { background-color: #FF2E44; }
-‎        .text-brand-red { color: #FF2E44; }
-‎    </style>
-‎</head>
-‎<body class="bg-gray-50 text-gray-800 font-sans">
-‎
-‎    <!-- Header / Navbar -->
-‎    <header class="brand-red text-white p-4 shadow-md sticky top-0 z-50">
-‎        <div class="max-w-md mx-auto flex items-center justify-between">
-‎            <h1 class="text-xl font-bold tracking-wide">RedDoorZ <span class="text-xs font-normal bg-white text-brand-red px-2 py-0.5 rounded-full">Mitra RedSeller</span></h1>
-‎        </div>
-‎    </header>
-‎
-‎    <!-- Konten Utama -->
-‎    <main class="max-w-md mx-auto p-4 mb-8">
-‎        
-‎        <!-- Banner Promo -->
-‎        <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex items-center justify-between shadow-sm">
-‎            <div>
-‎                <p class="text-xs text-red-600 font-semibold uppercase tracking-wider">Promo Hemat Otomatis</p>
-‎                <p class="text-lg font-bold text-gray-900">RDAFFREDOORZPROMOHEMAT</p>
-‎            </div>
-‎            <span class="bg-green-500 text-white text-xs font-bold px-2.5 py-1 rounded">Aktif</span>
-‎        </div>
-‎
-‎        <!-- Formulir Booking -->
-‎        <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-‎            <h2 class="text-lg font-bold mb-4 text-gray-900 border-b pb-2 border-gray-100">Data Pemesan</h2>
-‎            
-‎            <form id="bookingForm" onsubmit="sendToWhatsApp(event)">
-‎                
-‎                <!-- Nama Depan & Belakang -->
-‎                <div class="grid grid-cols-2 gap-4 mb-4">
-‎                    <div>
-‎                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Depan</label>
-‎                        <input type="text" id="firstName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
-‎                    </div>
-‎                    <div>
-‎                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Belakang</label>
-‎                        <input type="text" id="lastName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
-‎                    </div>
-‎                </div>
-‎
-‎                <!-- Email -->
-‎                <div class="mb-4">
-‎                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Alamat Email</label>
-‎                    <input type="email" id="email" required placeholder="nama@email.com" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
-‎                </div>
-‎
-‎                <!-- Nomor Telepon -->
-‎                <div class="mb-4">
-‎                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nomor Telepon / WA</label>
-‎                    <input type="tel" id="phone" required placeholder="Contoh: 081234567xxx" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
-‎                </div>
-‎
-‎                <!-- Catatan Pilihan Hotel -->
-‎                <div class="mb-6">
-‎                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Hotel & Tanggal Check-in</label>
-‎                    <textarea id="hotelDetails" required rows="3" placeholder="Contoh: RedDoorZ near Malioboro, Check-in 25 Juni 2026 (2 Malam)" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"></textarea>
-‎                </div>
-‎
-‎                <!-- Tombol Checkout -->
-‎                <button type="submit" class="w-full brand-red hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform active:scale-95 transition duration-150 flex items-center justify-center gap-2 cursor-pointer">
-‎                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.4.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.528 1.975 14.067 1.04 11.45 1.041 6.012 1.041 1.587 5.411 1.584 10.84c-.001 1.638.433 3.237 1.258 4.655l-.971 3.548 3.637-.943z"/></svg>
-‎                    Checkout ke WhatsApp Agen
-‎                </button>
-‎            </form>
-‎        </div>
-‎    </main>
-‎
-‎    <!-- Kode Logika Sistem -->
-‎    <script>
-‎        function sendToWhatsApp(event) {
-‎            event.preventDefault();
-‎
-‎            // 1. GANTI NOMOR INI dengan nomor WhatsApp Anda (Gunakan kode negara, contoh 628783022641 tanpa spasi/tanda +)
-‎            const nomorAgen ="6287830226641"; 
-‎            const kodePromo = "RDAFFREDOORZPROMOHEMAT";
-‎
-‎            // 2. Ambil data dari formulir
-‎            const firstName = document.getElementById('firstName').value;
-‎            const lastName = document.getElementById('lastName').value;
-‎            const email = document.getElementById('email').value;
-‎            const phone = document.getElementById('phone').value;
-‎            const hotelDetails = document.getElementById('hotelDetails').value;
-‎
-‎            // 3. Susun template pesan teks
-‎            const pesan teks = `*PESANAN KAMAR REDDOORZ (via Web App)*\n` +
-‎                          `----------------------------------------\n\n` +
-‎                          `*Data Tamu:*\n` +
-‎                          `• Nama Lengkap: ${firstName} ${lastName}\n` +
-‎                          `• Email: ${email}\n` +
-‎                          `• No. HP Tamu: ${phone}\n\n` +
-‎                          `*Detail Booking:*\n` +
-‎                          `${hotelDetails}\n\n` +
-‎                          `----------------------------------------\n` +
-‎                          `*KODE PROMO KUNCI:* \`${kodePromo}\`\n\n` +
-‎                          `Mohon diproses pemesanannya ya Agen!`;
-‎
-‎            // 4. Encode pesan ke format URL WhatsApp
-‎            const urlWhatsApp = `https://api.whatsapp.com/send?phone=${nomorAgen}&text=${encodeURIComponent(pesan teks)}`;
-‎
-‎            // 5. Alihkan pengguna langsung ke WhatsApp
-‎            window.open(urlWhatsApp, '_blank');
-‎        }
-‎    </script>
-‎</body>
-‎</html>
-‎
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Hotel</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="container">
+
+<div class="logo">
+Booking Hotel
+</div>
+
+<div class="subtitle">
+Booking Mudah • Cepat • Aman
+</div>
+
+</div>
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<h2>Form Booking</h2>
+
+<form id="bookingForm">
+
+<div class="row">
+
+<div class="input-group">
+
+<label>Nama Depan</label>
+
+<input
+type="text"
+id="firstname"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Nama Belakang</label>
+
+<input
+type="text"
+id="lastname"
+required>
+
+</div>
+
+</div>
+
+<div class="input-group">
+
+<label>Email</label>
+
+<input
+type="email"
+id="email"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Nomor WhatsApp</label>
+
+<input
+type="tel"
+id="phone"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Kota</label>
+
+<select id="city">
+
+<option>Jakarta</option>
+
+<option>Bandung</option>
+
+<option>Yogyakarta</option>
+
+<option>Semarang</option>
+
+<option>Surabaya</option>
+
+<option>Bali</option>
+
+<option>Medan</option>
+
+<option>Makassar</option>
+
+</select>
+
+</div>
+
+<div class="input-group">
+
+<label>Nama Hotel</label>
+
+<input
+type="text"
+id="hotel"
+placeholder="Contoh: RedDoorz Near Malioboro"
+required>
+
+</div>
+
+<div class="row">
+
+<div class="input-group">
+
+<label>Check In</label>
+
+<input
+type="date"
+id="checkin"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Check Out</label>
+
+<input
+type="date"
+id="checkout"
+required>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="input-group">
+
+<label>Jumlah Kamar</label>
+
+<input
+type="number"
+id="room"
+value="1"
+min="1">
+
+</div>
+
+<div class="input-group">
+
+<label>Jumlah Tamu</label>
+
+<input
+type="number"
+id="guest"
+value="2"
+min="1">
+
+</div>
+
+</div>
+
+<div class="input-group">
+
+<label>Catatan</label>
+
+<textarea
+id="note"
+rows="4"
+placeholder="Permintaan khusus (opsional)"></textarea>
+
+</div>
+
+<button
+type="button"
+id="checkoutButton">
+
+Checkout via WhatsApp
+
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>
+
+© 2026 Booking Hotel
+
+</p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
