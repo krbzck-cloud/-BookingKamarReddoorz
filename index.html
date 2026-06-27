@@ -1,35 +1,156 @@
-<form id="bookingForm">
-    <label>Nama Lengkap</label>
-    <input type="text" id="name" placeholder="Nama sesuai KTP" required>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Hotel RedDoorz | Promo Harga Hari Ini</title>
 
-    <!-- TAMBAHAN BARU: NOMOR HP & EMAIL -->
-    <div class="row">
-        <div>
-            <label>Nomor HP/WhatsApp</label>
-            <input type="tel" id="cust_phone" placeholder="Contoh: 08123456789" required>
+    <!-- Meta Tag Facebook & WA -->
+    <meta property="og:title" content="Booking Hotel RedDoorz - Promo Harga Spesial">
+    <meta property="og:description" content="Pesan kamar hotel lebih mudah & cepat lewat WhatsApp. Konfirmasi instan 24 jam!">
+    <meta property="og:image" content="https://krbzck-cloud.github.io/-BookingKamarReddoorz/promo.jpg">
+    <meta property="og:url" content="https://krbzck-cloud.github.io/-BookingKamarReddoorz/">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS LANGSUNG DI SINI AGAR TIDAK ERROR */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; color: #333; line-height: 1.6; }
+        
+        header { background: #e12024; color: white; padding: 30px 20px; text-align: center; border-radius: 0 0 25px 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .logo { font-size: 24px; font-weight: 700; }
+        .logo span { font-weight: 300; }
+        header p { font-size: 13px; opacity: 0.9; margin-top: 5px; }
+
+        .container { max-width: 500px; margin: 0 auto; padding: 0 15px; }
+
+        .hero-image { width: 100%; margin-top: -20px; margin-bottom: 20px; }
+        .hero-image img { width: 100%; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 4px solid white; }
+
+        .info-box { background: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid #e12024; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .info-box h3 { font-size: 16px; color: #e12024; margin-bottom: 5px; }
+        .info-box ul { list-style: none; font-size: 13px; }
+
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
+        h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: #333; font-weight: 700; }
+
+        label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; margin-top: 15px; color: #666; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; font-size: 14px; transition: 0.3s; background: #fafafa; }
+        input:focus, textarea:focus { border-color: #e12024; outline: none; background: white; }
+
+        .row { display: flex; gap: 10px; }
+        .row div { flex: 1; }
+
+        button { 
+            width: 100%; padding: 16px; background: #25d366; color: white; border: none; 
+            border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; 
+            margin-top: 25px; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); transition: 0.3s;
+        }
+        button:hover { background: #1eb954; transform: translateY(-2px); }
+
+        footer { text-align: center; padding: 30px; font-size: 11px; color: #888; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">RedDoorz <span>Booking</span></div>
+        <p>Solusi Cepat Reservasi Kamar Hotel 24 Jam</p>
+    </header>
+
+    <main class="container">
+        <!-- Gambar Hero/Promo -->
+        <div class="hero-image">
+            <img src="promo.jpg" alt="Promo Hotel RedDoorz">
         </div>
-        <div>
-            <label>Email</label>
-            <input type="email" id="cust_email" placeholder="alamat@email.com" required>
+
+        <div class="info-box">
+            <h3>Kenapa Booking Di Sini?</h3>
+            <ul>
+                <li>✅ Harga transparan (Sesuai Aplikasi)</li>
+                <li>✅ Admin Fast Respon via WhatsApp</li>
+                <li>✅ Bisa Request (Lantai bawah/Double bed)</li>
+            </ul>
         </div>
-    </div>
 
-    <label>Nama Hotel / Kota</label>
-    <input type="text" id="hotel" placeholder="Contoh: RedDoorz Near Malioboro" required>
+        <div class="card">
+            <h2>Formulir Pemesanan</h2>
+            <form id="bookingForm">
+                <label>Nama Lengkap (Sesuai KTP)</label>
+                <input type="text" id="name" placeholder="Contoh: Budi Santoso" required>
 
-    <div class="row">
-        <div>
-            <label>Check In</label>
-            <input type="date" id="checkin" required>
+                <div class="row">
+                    <div>
+                        <label>Nomor HP/WhatsApp</label>
+                        <input type="tel" id="cust_phone" placeholder="0812xxxx" required>
+                    </div>
+                    <div>
+                        <label>Email</label>
+                        <input type="email" id="cust_email" placeholder="email@anda.com" required>
+                    </div>
+                </div>
+
+                <label>Nama Hotel / Lokasi Kota</label>
+                <input type="text" id="hotel" placeholder="Contoh: RedDoorz Near Malioboro" required>
+
+                <div class="row">
+                    <div>
+                        <label>Check In</label>
+                        <input type="date" id="checkin" required>
+                    </div>
+                    <div>
+                        <label>Check Out</label>
+                        <input type="date" id="checkout" required>
+                    </div>
+                </div>
+
+                <label>Catatan Tambahan (Opsional)</label>
+                <textarea id="note" rows="2" placeholder="Contoh: Request lantai 1, non-smoking room..."></textarea>
+
+                <button type="submit">
+                    HUBUNGI ADMIN VIA WHATSAPP
+                </button>
+            </form>
         </div>
-        <div>
-            <label>Check Out</label>
-            <input type="date" id="checkout" required>
-        </div>
-    </div>
+    </main>
 
-    <label>Catatan (Opsional)</label>
-    <textarea id="note" rows="2" placeholder="Contoh: Double bed, lantai atas..."></textarea>
+    <footer>
+        <p>&copy; 2024 RedDoorz Partner Service. Layanan Bantuan Reservasi.</p>
+    </footer>
 
-    <button type="submit" id="btnWa">PESAN VIA WHATSAPP</button>
-</form>
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const cust_phone = document.getElementById('cust_phone').value;
+            const cust_email = document.getElementById('cust_email').value;
+            const hotel = document.getElementById('hotel').value;
+            const checkin = document.getElementById('checkin').value;
+            const checkout = document.getElementById('checkout').value;
+            const note = document.getElementById('note').value || "-";
+
+            // GANTI NOMOR WHATSAPP KAMU DI SINI (AWALAN 62)
+            const no_wa = "628123456789"; 
+
+            const pesan = `Halo Admin, saya mau booking hotel:%0A%0A` +
+                          `*Data Tamu:*%0A` +
+                          `Nama: ${name}%0A` +
+                          `No HP: ${cust_phone}%0A` +
+                          `Email: ${cust_email}%0A%0A` +
+                          `*Rincian:*%0A` +
+                          `Hotel: ${hotel}%0A` +
+                          `Check-in: ${checkin}%0A` +
+                          `Check-out: ${checkout}%0A` +
+                          `Catatan: ${note}%0A%0A` +
+                          `Mohon diproses, terima kasih admin.`;
+
+            window.open(`https://api.whatsapp.com/send?phone=${no_wa}&text=${pesan}`, '_blank');
+        });
+    </script>
+
+</body>
+</html>
