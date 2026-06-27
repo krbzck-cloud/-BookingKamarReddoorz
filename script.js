@@ -1,48 +1,21 @@
-const nomorAgen = "6287830226641";
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-document.getElementById("checkoutButton").addEventListener("click", function () {
+    const name = document.getElementById('name').value;
+    const hotel = document.getElementById('hotel').value;
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    const note = document.getElementById('note').value || "-";
 
-const firstName = document.getElementById("firstname").value;
-const lastName = document.getElementById("lastname").value;
-const email = document.getElementById("email").value;
-const phone = document.getElementById("phone").value;
-const hotel = document.getElementById("hotel").value;
-const city = document.getElementById("city").value;
-const checkin = document.getElementById("checkin").value;
-const checkout = document.getElementById("checkout").value;
-const room = document.getElementById("room").value;
-const guest = document.getElementById("guest").value;
-const note = document.getElementById("note").value;
+    // GANTI NOMOR WA KAMU DI SINI (Gunakan 62...)
+    const no_wa = "6287830226641"; 
 
-if(firstName=="" || email=="" || phone=="" || hotel==""){
-alert("Mohon lengkapi data terlebih dahulu.");
-return;
-}
+    const pesan = `Halo Admin, saya mau booking RedDoorz:%0A%0A` +
+                  `Nama: ${name}%0A` +
+                  `Hotel: ${hotel}%0A` +
+                  `Check-in: ${checkin}%0A` +
+                  `Check-out: ${checkout}%0A` +
+                  `Catatan: ${note}`;
 
-const pesan =
-`Halo Admin,
-
-Saya ingin melakukan booking hotel.
-
-Nama : ${firstName} ${lastName}
-Email : ${email}
-WhatsApp : ${phone}
-
-Kota : ${city}
-Hotel : ${hotel}
-
-Check In : ${checkin}
-Check Out : ${checkout}
-
-Jumlah Kamar : ${room}
-Jumlah Tamu : ${guest}
-
-Catatan :
-${note}`;
-
-window.open(
-"https://wa.me/"+nomorAgen+"?text="+encodeURIComponent(pesan),
-"_blank"
-);
-
+    window.open(`https://api.whatsapp.com/send?phone=${no_wa}&text=${pesan}`, '_blank');
 });
