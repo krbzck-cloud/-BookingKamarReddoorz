@@ -1,76 +1,35 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Hotel RedDoorz | Harga Promo Hari Ini</title>
+<form id="bookingForm">
+    <label>Nama Lengkap</label>
+    <input type="text" id="name" placeholder="Nama sesuai KTP" required>
 
-    <!-- Meta Tag untuk Facebook & WhatsApp agar muncul gambar -->
-    <meta property="og:title" content="Booking Hotel RedDoorz - Promo Spesial">
-    <meta property="og:description" content="Pesan kamar hotel lebih mudah dan cepat lewat WhatsApp. Konfirmasi instan 24 jam!">
-    <meta property="og:image" content="https://krbzck-cloud.github.io/-BookingKamarReddoorz/promo.jpg">
-    <meta property="og:url" content="https://krbzck-cloud.github.io/-BookingKamarReddoorz/">
-    <meta property="og:type" content="website">
-
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <header>
-        <div class="container">
-            <div class="logo">RedDoorz <span>Booking</span></div>
-            <p>Konfirmasi Cepat • Harga Murah • Aman</p>
+    <!-- TAMBAHAN BARU: NOMOR HP & EMAIL -->
+    <div class="row">
+        <div>
+            <label>Nomor HP/WhatsApp</label>
+            <input type="tel" id="cust_phone" placeholder="Contoh: 08123456789" required>
         </div>
-    </header>
-
-    <main class="container">
-        <!-- Gambar Hero -->
-        <div class="hero-image">
-            <img src="promo.jpg" alt="Promo Hotel">
+        <div>
+            <label>Email</label>
+            <input type="email" id="cust_email" placeholder="alamat@email.com" required>
         </div>
+    </div>
 
-        <div class="info-box">
-            <h3>Kenapa Booking di Sini?</h3>
-            <ul>
-                <li>✅ Harga sesuai aplikasi, tanpa biaya admin.</li>
-                <li>✅ Admin fast respon via WhatsApp.</li>
-                <li>✅ Bisa request kamar (Lantai bawah/Non-smoking).</li>
-            </ul>
+    <label>Nama Hotel / Kota</label>
+    <input type="text" id="hotel" placeholder="Contoh: RedDoorz Near Malioboro" required>
+
+    <div class="row">
+        <div>
+            <label>Check In</label>
+            <input type="date" id="checkin" required>
         </div>
-
-        <div class="card">
-            <h2>Formulir Reservasi</h2>
-            <form id="bookingForm">
-                <label>Nama Lengkap</label>
-                <input type="text" id="name" placeholder="Nama sesuai KTP" required>
-
-                <label>Nama Hotel / Kota</label>
-                <input type="text" id="hotel" placeholder="Contoh: RedDoorz Near Malioboro" required>
-
-                <div class="row">
-                    <div>
-                        <label>Check In</label>
-                        <input type="date" id="checkin" required>
-                    </div>
-                    <div>
-                        <label>Check Out</label>
-                        <input type="date" id="checkout" required>
-                    </div>
-                </div>
-
-                <label>Catatan (Opsional)</label>
-                <textarea id="note" rows="2" placeholder="Contoh: Double bed, lantai atas..."></textarea>
-
-                <button type="submit" id="btnWa">PESAN VIA WHATSAPP</button>
-            </form>
+        <div>
+            <label>Check Out</label>
+            <input type="date" id="checkout" required>
         </div>
-    </main>
+    </div>
 
-    <footer>
-        <p>&copy; 2024 Booking Kamar Hotel RedDoorz Partner.</p>
-    </footer>
+    <label>Catatan (Opsional)</label>
+    <textarea id="note" rows="2" placeholder="Contoh: Double bed, lantai atas..."></textarea>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <button type="submit" id="btnWa">PESAN VIA WHATSAPP</button>
+</form>
